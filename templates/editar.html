@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Tarea</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <style>
+        .navbar-custom {
+            background: linear-gradient(45deg, #ff6f61, #f4a261);
+        }
+        .navbar {
+            transition: background-color 0.3s ease;
+        }
+        .navbar-light .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #f0f0f0;
+        }
+    
+        body {
+            background-color: #007bff;
+            font-family: 'Arial', sans-serif;
+            margin-top: 50px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+        <!-- Menú de navegación mejorado con un fondo degradado y un estilo más moderno -->
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="#">Actualizar Tareas</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('index')}}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('tarea')}}">Agregar Tarea</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('consulta')}}">Reporte de tareas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('agregar_categ')}}">Agregar Categoría</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('datos')}}">Reporte de Categoría</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit">Buscar</button>
+                    </form>
+                </div>
+            </div>
+        </nav> <br>
+
+<div class="container">
+    <h2>Editar Tarea</h2>
+    <!-- Formulario para editar tarea -->
+    <form method="POST" id="editForm">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" value="{{ tarea['nombre'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Prioridad</label>
+            <input type="text" name="prioridad" class="form-control" value="{{ tarea['prioridad'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Fecha de Inicio</label>
+            <input type="date" name="fecha_inicio" class="form-control" value="{{ tarea['fecha_inicio'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Fecha de Fin</label>
+            <input type="date" name="fecha_fin" class="form-control" value="{{ tarea['fecha_fin'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Hora</label>
+            <input type="time" name="hora" class="form-control" value="{{ tarea['hora'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tipo</label>
+            <input type="text" name="tipo" class="form-control" value="{{ tarea['tipo'] }}" required>
+        </div>
+        
+        
+        <!-- Botón para actualizar con confirmación -->
+        <button type="button" class="btn btn-primary" onclick="confirmarEditar()">Actualizar</button>
+    </form>
+
+    <!-- Mensaje de confirmación -->
+    <div class="alert alert-success mt-3" role="alert" id="confirmationMessage">
+        Tarea actualizada correctamente.
+    </div>
+</div>
+
+<script>
+    // Función de confirmación para editar
+    function confirmarEditar() {
+        var confirmar = confirm("¿Estás seguro de que deseas editar esta tarea?");
+        if (confirmar) {
+            // Si el usuario confirma, el formulario se enviará
+            document.getElementById('editForm').submit();
+        } else {
+            // Si no confirma, no hace nada
+            return false;
+        }
+    }
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
